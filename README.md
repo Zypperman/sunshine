@@ -12,6 +12,9 @@ just run the init script, everything else should take care of itself.
 
 ## Progress
 
-- [ ] Barebones for codespaces
+- [ ] Barebones for co
+  - [ ] set up base extensions and settings
+  - [ ] export shortcuts and viewport preferences
 - [ ] tools from MSI summit e16
-- [ ] 
+- [ ] adapt tools for linux
+- [ ] adapt tools for MacOS
