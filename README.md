@@ -20,6 +20,10 @@ This repo can initialize new codespaces two ways, and both run
 - [starship](https://starship.rs), configured with this repo's
   [`starship.toml`](starship.toml) (symlinked to `~/.config/starship.toml`)
   and wired into `~/.bashrc`
+- [neovim](https://neovim.io) (prebuilt binary, unpacked to `~/.local/nvim`,
+  `~/.local/bin` added to `PATH`), configured with this repo's
+  [`nvim/`](nvim) (symlinked to `~/.config/nvim`) — a `vscode-neovim` setup,
+  paired with the `asvetliakov.vscode-neovim` extension in `extensions.md`
 
 1. **Codespaces created from this repo** use
    [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json),

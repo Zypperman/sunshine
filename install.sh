@@ -16,6 +16,7 @@ set -uo pipefail
 dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 extensions_file="$dotfiles_dir/extensions.md"
 starship_config_file="$dotfiles_dir/starship.toml"
+nvim_config_dir="$dotfiles_dir/nvim"
 
 install_vscode_extensions() {
   local code_bin=""
@@ -79,7 +80,51 @@ install_starship() {
   echo "install.sh: added starship init to $bashrc"
 }
 
+install_neovim() {
+  if command -v nvim >/dev/null 2>&1; then
+    echo "install.sh: nvim already installed, skipping"
+  else
+    echo "install.sh: installing neovim"
+    local tmp
+    tmp="$(mktemp -d)"
+    if ! curl -fsSL -o "$tmp/nvim.tar.gz" \
+        https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz; then
+      echo "install.sh: neovim download failed, skipping config"
+      rm -rf "$tmp"
+      return 0
+    fi
+
+    mkdir -p "$HOME/.local" "$HOME/.local/bin"
+    tar -C "$HOME/.local" -xzf "$tmp/nvim.tar.gz"
+    rm -rf "$HOME/.local/nvim"
+    mv "$HOME/.local/nvim-linux-x86_64" "$HOME/.local/nvim"
+    ln -sf "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
+    rm -rf "$tmp"
+
+    local bashrc="$HOME/.bashrc"
+    if [ ! -f "$bashrc" ] || ! grep -qF '$HOME/.local/bin' "$bashrc"; then
+      echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$bashrc"
+      echo "install.sh: added ~/.local/bin to PATH in $bashrc"
+    fi
+    export PATH="$HOME/.local/bin:$PATH"
+  fi
+
+  if [ ! -d "$nvim_config_dir" ]; then
+    echo "install.sh: $nvim_config_dir not found, skipping neovim config"
+    return 0
+  fi
+
+  mkdir -p "$HOME/.config"
+  if [ -e "$HOME/.config/nvim" ] && [ ! -L "$HOME/.config/nvim" ]; then
+    mv "$HOME/.config/nvim" "$HOME/.config/nvim.bak.$(date +%s)"
+    echo "install.sh: backed up existing ~/.config/nvim"
+  fi
+  ln -sfn "$nvim_config_dir" "$HOME/.config/nvim"
+  echo "install.sh: linked nvim config"
+}
+
 install_vscode_extensions
 install_starship
+install_neovim
 
 echo "install.sh: done"
