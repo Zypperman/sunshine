@@ -12,19 +12,23 @@ just run the init script, everything else should take care of itself.
 
 ## Codespaces
 
-This repo can initialize new codespaces two ways, and both read from the
-same `extensions.md` list (one extension id per line — edit that file, not
-the scripts):
+This repo can initialize new codespaces two ways, and both run
+[`install.sh`](install.sh), which installs:
+
+- the VS Code extensions listed in [`extensions.md`](extensions.md) (one
+  extension id per line — edit that file, not the script)
+- [starship](https://starship.rs), configured with this repo's
+  [`starship.toml`](starship.toml) (symlinked to `~/.config/starship.toml`)
+  and wired into `~/.bashrc`
 
 1. **Codespaces created from this repo** use
    [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json),
    which pins the machine to at least 4 cores / 16 GB RAM / 64 GB storage
-   via `hostRequirements`, and runs [`install.sh`](install.sh) as its
-   `postCreateCommand` to install the extensions.
+   via `hostRequirements`, and runs `install.sh` as its `postCreateCommand`.
 2. **Any codespace, for any repo**, if this repo is set as your personal
    dotfiles repository under Settings > Codespaces > "Automatically install
-   dotfiles" — GitHub clones this repo and runs [`install.sh`](install.sh)
-   automatically after creation.
+   dotfiles" — GitHub clones this repo and runs `install.sh` automatically
+   after creation.
 
 ## Progress
 

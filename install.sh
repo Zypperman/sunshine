@@ -15,6 +15,7 @@ set -uo pipefail
 
 dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 extensions_file="$dotfiles_dir/extensions.md"
+starship_config_file="$dotfiles_dir/starship.toml"
 
 install_vscode_extensions() {
   local code_bin=""
@@ -50,6 +51,35 @@ install_vscode_extensions() {
   fi
 }
 
+install_starship() {
+  if command -v starship >/dev/null 2>&1; then
+    echo "install.sh: starship already installed, skipping"
+  else
+    echo "install.sh: installing starship"
+    if ! curl -sS https://starship.rs/install.sh | sh -s -- -y; then
+      echo "install.sh: starship install failed, skipping config/init"
+      return 0
+    fi
+  fi
+
+  if [ -f "$starship_config_file" ]; then
+    mkdir -p "$HOME/.config"
+    ln -sf "$starship_config_file" "$HOME/.config/starship.toml"
+    echo "install.sh: linked starship.toml"
+  else
+    echo "install.sh: $starship_config_file not found, skipping starship config"
+  fi
+
+  local init_line='eval "$(starship init bash)"'
+  local bashrc="$HOME/.bashrc"
+  if [ -f "$bashrc" ] && grep -qF "starship init bash" "$bashrc"; then
+    return 0
+  fi
+  echo "$init_line" >> "$bashrc"
+  echo "install.sh: added starship init to $bashrc"
+}
+
 install_vscode_extensions
+install_starship
 
 echo "install.sh: done"
