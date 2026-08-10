@@ -17,6 +17,30 @@ dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 extensions_file="$dotfiles_dir/extensions.md"
 starship_config_file="$dotfiles_dir/starship.toml"
 nvim_config_dir="$dotfiles_dir/nvim"
+local_bin="$HOME/.local/bin"
+apt_updated=0
+
+mkdir -p "$local_bin"
+export PATH="$local_bin:$PATH"
+
+# So tools installed to ~/.local/bin this run are still on PATH next login.
+ensure_local_bin_on_path() {
+  local bashrc="$HOME/.bashrc"
+  if [ ! -f "$bashrc" ] || ! grep -qF '.local/bin' "$bashrc"; then
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$bashrc"
+    echo "install.sh: added ~/.local/bin to PATH in $bashrc"
+  fi
+}
+
+# apt lists are stripped from devcontainer base images to save space, so
+# `apt-get install` needs an `update` first -- but only once per run.
+apt_install() {
+  if [ "$apt_updated" -eq 0 ]; then
+    sudo DEBIAN_FRONTEND=noninteractive apt-get update -qq
+    apt_updated=1
+  fi
+  sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq "$@"
+}
 
 install_vscode_extensions() {
   local code_bin=""
@@ -94,19 +118,13 @@ install_neovim() {
       return 0
     fi
 
-    mkdir -p "$HOME/.local" "$HOME/.local/bin"
+    mkdir -p "$HOME/.local"
     tar -C "$HOME/.local" -xzf "$tmp/nvim.tar.gz"
     rm -rf "$HOME/.local/nvim"
     mv "$HOME/.local/nvim-linux-x86_64" "$HOME/.local/nvim"
-    ln -sf "$HOME/.local/nvim/bin/nvim" "$HOME/.local/bin/nvim"
+    ln -sf "$HOME/.local/nvim/bin/nvim" "$local_bin/nvim"
     rm -rf "$tmp"
-
-    local bashrc="$HOME/.bashrc"
-    if [ ! -f "$bashrc" ] || ! grep -qF '$HOME/.local/bin' "$bashrc"; then
-      echo 'export PATH="$HOME/.local/bin:$PATH"' >> "$bashrc"
-      echo "install.sh: added ~/.local/bin to PATH in $bashrc"
-    fi
-    export PATH="$HOME/.local/bin:$PATH"
+    ensure_local_bin_on_path
   fi
 
   if [ ! -d "$nvim_config_dir" ]; then
@@ -123,8 +141,109 @@ install_neovim() {
   echo "install.sh: linked nvim config"
 }
 
+install_cli_tools() {
+  local missing=()
+  command -v rg >/dev/null 2>&1 || missing+=("ripgrep")
+  { command -v fd >/dev/null 2>&1 || command -v fdfind >/dev/null 2>&1; } || missing+=("fd-find")
+  command -v fzf >/dev/null 2>&1 || missing+=("fzf")
+  command -v gcc >/dev/null 2>&1 || missing+=("build-essential")
+
+  if [ "${#missing[@]}" -gt 0 ]; then
+    echo "install.sh: installing via apt: ${missing[*]}"
+    apt_install "${missing[@]}" || echo "install.sh: apt install failed for: ${missing[*]}"
+  fi
+
+  # Ubuntu's fd-find package ships the binary as 'fdfind' (name clash with
+  # an unrelated 'fd' package), so it needs its own fd symlink on PATH.
+  if command -v fdfind >/dev/null 2>&1 && ! command -v fd >/dev/null 2>&1; then
+    ln -sf "$(command -v fdfind)" "$local_bin/fd"
+  fi
+}
+
+install_zoxide() {
+  if command -v zoxide >/dev/null 2>&1; then
+    echo "install.sh: zoxide already installed, skipping"
+  else
+    echo "install.sh: installing zoxide"
+    curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh \
+      | sh -s -- --bin-dir "$local_bin" || echo "install.sh: zoxide install failed"
+  fi
+
+  local bashrc="$HOME/.bashrc"
+  if [ ! -f "$bashrc" ] || ! grep -qF "zoxide init bash" "$bashrc"; then
+    echo 'eval "$(zoxide init bash)"' >> "$bashrc"
+    echo "install.sh: added zoxide init to $bashrc"
+  fi
+}
+
+install_lazygit() {
+  if command -v lazygit >/dev/null 2>&1; then
+    echo "install.sh: lazygit already installed, skipping"
+    return 0
+  fi
+
+  echo "install.sh: installing lazygit"
+  local version
+  version="$(curl -fsSL https://api.github.com/repos/jesseduffield/lazygit/releases/latest \
+    | grep -Po '"tag_name":\s*"v\K[^"]+')"
+  if [ -z "$version" ]; then
+    echo "install.sh: could not resolve latest lazygit version, skipping"
+    return 0
+  fi
+
+  local tmp
+  tmp="$(mktemp -d)"
+  if ! curl -fsSL -o "$tmp/lazygit.tar.gz" \
+      "https://github.com/jesseduffield/lazygit/releases/download/v${version}/lazygit_${version}_Linux_x86_64.tar.gz"; then
+    echo "install.sh: lazygit download failed"
+    rm -rf "$tmp"
+    return 0
+  fi
+
+  tar -C "$tmp" -xzf "$tmp/lazygit.tar.gz" lazygit
+  mv "$tmp/lazygit" "$local_bin/lazygit"
+  chmod +x "$local_bin/lazygit"
+  rm -rf "$tmp"
+}
+
+install_nerd_font() {
+  local font_dir="$HOME/.local/share/fonts/CaskaydiaCoveNerdFont"
+  if [ -d "$font_dir" ] && [ -n "$(ls -A "$font_dir" 2>/dev/null)" ]; then
+    echo "install.sh: CaskaydiaCove Nerd Font already installed, skipping"
+    return 0
+  fi
+
+  if ! command -v unzip >/dev/null 2>&1; then
+    apt_install unzip || { echo "install.sh: unzip unavailable, skipping nerd font"; return 0; }
+  fi
+
+  echo "install.sh: installing CaskaydiaCove Nerd Font"
+  local tmp
+  tmp="$(mktemp -d)"
+  if ! curl -fsSL -o "$tmp/font.zip" \
+      "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaCode.zip"; then
+    echo "install.sh: nerd font download failed"
+    rm -rf "$tmp"
+    return 0
+  fi
+
+  mkdir -p "$font_dir"
+  unzip -qo "$tmp/font.zip" -d "$font_dir"
+  rm -rf "$tmp"
+  command -v fc-cache >/dev/null 2>&1 && fc-cache -f "$font_dir" >/dev/null 2>&1
+
+  echo "install.sh: NOTE - this only installs the font inside the container." \
+       "Codespaces renders VS Code's UI (editor, terminal) on the client," \
+       "so CaskaydiaCove Nerd Font must also be installed on the machine" \
+       "running VS Code (desktop app or the OS behind your browser)."
+}
+
 install_vscode_extensions
 install_starship
 install_neovim
+install_cli_tools
+install_zoxide
+install_lazygit
+install_nerd_font
 
 echo "install.sh: done"

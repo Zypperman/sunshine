@@ -24,10 +24,28 @@ This repo can initialize new codespaces two ways, and both run
   `~/.local/bin` added to `PATH`), configured with this repo's
   [`nvim/`](nvim) (symlinked to `~/.config/nvim`) — a `vscode-neovim` setup,
   paired with the `asvetliakov.vscode-neovim` extension in `extensions.md`
+- `ripgrep`, `fd`, `fzf` and `build-essential` via `apt` (`fd-find`'s
+  `fdfind` binary gets a `fd` symlink, since Ubuntu's package can't use
+  that name)
+- [`zoxide`](https://github.com/ajeetdsouza/zoxide) (official installer,
+  installed to `~/.local/bin`) wired into `~/.bashrc`
+- [`lazygit`](https://github.com/jesseduffield/lazygit) (latest GitHub
+  release, installed to `~/.local/bin`)
+- the [CaskaydiaCove Nerd Font](https://www.nerdfonts.com/font-downloads)
+  (Nerd Fonts' patched Cascadia Code), installed under
+  `~/.local/share/fonts` *inside the container*
+
+  This last one only helps if something running server-side in the
+  container needs the font file on disk. It does **not** make glyphs
+  (starship icons, nvim fold/mode indicators, etc.) render correctly in
+  Codespaces — VS Code's UI is drawn by the client (your desktop app or
+  browser), so CaskaydiaCove Nerd Font also has to be installed on
+  whichever machine you're actually looking at the screen on, with
+  `editor.fontFamily` / `terminal.integrated.fontFamily` set to it there.
 
 1. **Codespaces created from this repo** use
    [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json),
-   which pins the machine to at least 4 cores / 16 GB RAM / 64 GB storage
+   which pins the machine to at least 8 cores / 32 GB RAM / 128 GB storage
    via `hostRequirements`, and runs `install.sh` as its `postCreateCommand`.
 2. **Any codespace, for any repo**, if this repo is set as your personal
    dotfiles repository under Settings > Codespaces > "Automatically install
