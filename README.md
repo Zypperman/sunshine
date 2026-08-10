@@ -10,11 +10,27 @@ Set up as per [the dotfiles configuration for codespaces](https://docs.github.co
 
 just run the init script, everything else should take care of itself.
 
+## Codespaces
+
+This repo can initialize new codespaces two ways, and both read from the
+same `extensions.md` list (one extension id per line — edit that file, not
+the scripts):
+
+1. **Codespaces created from this repo** use
+   [`.devcontainer/devcontainer.json`](.devcontainer/devcontainer.json),
+   which pins the machine to at least 4 cores / 16 GB RAM / 64 GB storage
+   via `hostRequirements`, and runs [`install.sh`](install.sh) as its
+   `postCreateCommand` to install the extensions.
+2. **Any codespace, for any repo**, if this repo is set as your personal
+   dotfiles repository under Settings > Codespaces > "Automatically install
+   dotfiles" — GitHub clones this repo and runs [`install.sh`](install.sh)
+   automatically after creation.
+
 ## Progress
 
 - [ ] Barebones for co
-  - [ ] set up base extensions and settings
-  - [ ] export shortcuts and viewport preferences
+  - [x] set up base extensions
+  - [ ] export settings, shortcuts and viewport preferences
 - [ ] tools from MSI summit e16
 - [ ] adapt tools for linux
 - [ ] adapt tools for MacOS

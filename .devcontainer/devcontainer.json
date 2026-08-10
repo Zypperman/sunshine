@@ -1,0 +1,10 @@
+{
+  "name": "violence",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "hostRequirements": {
+    "cpus": 4,
+    "memory": "16gb",
+    "storage": "64gb"
+  },
+  "postCreateCommand": "bash install.sh"
+}
