@@ -1,0 +1,350 @@
+
+2026-08-10 23:25:37.648Z: Host information
+2026-08-10 23:25:37.648Z: ----------------
+2026-08-10 23:25:37.648Z: OS: Ubuntu 22.04.5 LTS (stable release)
+2026-08-10 23:25:37.648Z: Image details: https://github.com/github/codespaces-host-images/blob/main/README.md
+2026-08-10 23:25:37.648Z: ----------------
+
+=================================================================================
+2026-08-10 23:25:37.648Z: Configuration starting...
+2026-08-10 23:25:37.658Z: Cloning...
+2026-08-10 23:25:40.182Z: Using image: mcr.microsoft.com/devcontainers/universal
+
+=================================================================================
+2026-08-10 23:25:40.200Z: Creating container...
+
+=================================================================================
+2026-08-10 23:25:40.684Z: Running blocking commands...
+2026-08-10 23:25:40.746Z: $ devcontainer up --id-label Type=codespaces --workspace-folder /var/lib/docker/codespacemount/workspace/0D_proxy_layer --mount type=bind,source=/.codespaces/agent/mount/cache,target=/vscode --user-data-folder /var/lib/docker/codespacemount/.persistedshare --container-data-folder .vscode-remote/data/Machine --container-system-data-folder /var/vscode-remote --log-level trace --log-format json --update-remote-user-uid-default never --mount-workspace-git-root false --omit-config-remote-env-from-metadata --skip-non-blocking-commands --expect-existing-container --override-config /root/.codespaces/shared/merged_devcontainer.json --default-user-env-probe loginInteractiveShell --container-session-data-folder /workspaces/.codespaces/.persistedshare/devcontainers-cli/cache --secrets-file /root/.codespaces/shared/user-secrets-envs.json
+2026-08-10 23:25:40.957Z: @devcontainers/cli 0.83.3. Node.js v18.20.8. linux 6.8.0-1052-azure x64.
+2026-08-10 23:25:41.306Z: Outcome: success User: codespace WorkspaceFolder: /workspaces/0D_proxy_layer
+2026-08-10 23:25:41.345Z: devcontainer process exited with exit code 0
+
+=================================================================================
+2026-08-10 23:25:41.377Z: Configuring codespace...
+2026-08-10 23:25:41.397Z: Running oryx...
+
+=================================================================================
+2026-08-10 23:25:46.406Z: Running commands...
+2026-08-10 23:25:46.421Z: $ devcontainer up --id-label Type=codespaces --workspace-folder /var/lib/docker/codespacemount/workspace/0D_proxy_layer --expect-existing-container --skip-post-attach --mount type=bind,source=/.codespaces/agent/mount/cache,target=/vscode --container-data-folder .vscode-remote/data/Machine --container-system-data-folder /var/vscode-remote --log-level trace --log-format json --update-remote-user-uid-default never --mount-workspace-git-root false --override-config /root/.codespaces/shared/merged_devcontainer.json --default-user-env-probe loginInteractiveShell --container-session-data-folder /workspaces/.codespaces/.persistedshare/devcontainers-cli/cache --secrets-file /root/.codespaces/shared/user-secrets-envs.json
+2026-08-10 23:25:46.582Z: @devcontainers/cli 0.83.3. Node.js v18.20.8. linux 6.8.0-1052-azure x64.
+2026-08-10 23:25:46.893Z: Running the postCreateCommand from Feature 'ghcr.io/devcontainers/features/git-lfs:1'...
+
+2026-08-10 23:25:46.894Z: /usr/local/share/pull-git-lfs-artifacts.sh
+2026-08-10 23:25:47.646Z: Fetching git lfs artifacts...
+2026-08-10 23:25:48.434Z: Updated Git hooks.
+Git LFS initialized.
+2026-08-10 23:25:48.501Z: Outcome: success User: codespace WorkspaceFolder: /workspaces/0D_proxy_layer
+2026-08-10 23:25:48.516Z: devcontainer process exited with exit code 0
+
+=================================================================================
+2026-08-10 23:25:48.539Z: Installing dotfiles...
+2026-08-10 23:25:48.563Z: $ devcontainer up --id-label Type=codespaces --workspace-folder /var/lib/docker/codespacemount/workspace/0D_proxy_layer --expect-existing-container --skip-post-attach --mount type=bind,source=/.codespaces/agent/mount/cache,target=/vscode --container-data-folder .vscode-remote/data/Machine --container-system-data-folder /var/vscode-remote --log-level trace --log-format json --update-remote-user-uid-default never --mount-workspace-git-root false --override-config /root/.codespaces/shared/merged_devcontainer.json --dotfiles-repository https://github.com/Zypperman/violence --dotfiles-target-path /workspaces/.codespaces/.persistedshare/dotfiles --default-user-env-probe loginInteractiveShell --container-session-data-folder /workspaces/.codespaces/.persistedshare/devcontainers-cli/cache --secrets-file /root/.codespaces/shared/user-secrets-envs.json
+2026-08-10 23:25:48.911Z: @devcontainers/cli 0.83.3. Node.js v18.20.8. linux 6.8.0-1052-azure x64.
+2026-08-10 23:25:49.317Z: $ # Clone & install dotfiles
+2026-08-10 23:25:49.319Z: Cloning into '/workspaces/.codespaces/.persistedshare/dotfiles'...
+
+2026-08-10 23:25:51.748Z: Setting current directory to /workspaces/.codespaces/.persistedshare/dotfiles
+Setting /workspaces/.codespaces/.persistedshare/dotfiles/install.sh as executable
+
+2026-08-10 23:25:51.749Z: Executing command /workspaces/.codespaces/.persistedshare/dotfiles/install.sh...
+
+2026-08-10 23:25:51.757Z: install.sh: installing VS Code extensions with 'code'
+
+2026-08-10 23:25:51.760Z:   - 36.markdown-auto-link-title
+
+2026-08-10 23:25:51.770Z:   - aaron-bond.better-comments
+
+2026-08-10 23:25:51.778Z:   - adpyke.codesnap
+
+2026-08-10 23:25:51.787Z:   - akamud.vscode-theme-onedark
+
+2026-08-10 23:25:51.797Z:   - albert.tabout
+
+2026-08-10 23:25:51.804Z:   - anthropic.claude-code
+
+2026-08-10 23:25:51.812Z:   - asvetliakov.vscode-neovim
+
+2026-08-10 23:25:51.823Z:   - aykutsarac.jsoncrack-vscode
+
+2026-08-10 23:25:51.831Z:   - be5invis.vscode-icontheme-nomo-dark
+
+2026-08-10 23:25:51.839Z:   - bierner.markdown-mermaid
+
+2026-08-10 23:25:51.849Z:   - bierner.markdown-preview-github-styles
+
+2026-08-10 23:25:51.855Z:   - bpruitt-goddard.mermaid-markdown-syntax-highlighting
+
+2026-08-10 23:25:51.864Z:   - christian-kohler.path-intellisense
+
+2026-08-10 23:25:51.872Z:   - davidanson.vscode-markdownlint
+
+2026-08-10 23:25:51.880Z:   - docker.docker
+
+2026-08-10 23:25:51.888Z:   - donjayamanne.githistory
+
+2026-08-10 23:25:51.903Z:   - dotenv.dotenv-vscode
+
+2026-08-10 23:25:51.915Z:   - dzhavat.bracket-pair-toggler
+
+2026-08-10 23:25:51.924Z:   - eamodio.gitlens
+
+2026-08-10 23:25:51.933Z:   - esbenp.prettier-vscode
+
+2026-08-10 23:25:51.941Z:   - formulahendry.auto-rename-tag
+
+2026-08-10 23:25:51.948Z:   - foxundermoon.shell-format
+
+2026-08-10 23:25:51.956Z:   - github.codespaces
+
+2026-08-10 23:25:51.965Z:   - github.remotehub
+
+2026-08-10 23:25:51.973Z:   - github.vscode-github-actions
+
+2026-08-10 23:25:51.981Z:   - gruntfuggly.todo-tree
+
+2026-08-10 23:25:51.989Z:   - hbenl.vscode-test-explorer
+
+2026-08-10 23:25:51.997Z:   - hwencc.html-tag-wrapper
+
+2026-08-10 23:25:52.005Z:   - jellydn.fzf-picker
+
+2026-08-10 23:25:52.013Z:   - joephilip.markdown-code-snippets
+
+2026-08-10 23:25:52.020Z:   - jonlester.markdown-preview-export
+
+2026-08-10 23:25:52.032Z:   - maciejdems.add-to-gitignore
+
+2026-08-10 23:25:52.042Z:   - mathematic.vscode-pdf
+
+2026-08-10 23:25:52.049Z:   - mechatroner.rainbow-csv
+
+2026-08-10 23:25:52.058Z:   - mhutchie.git-graph
+
+2026-08-10 23:25:52.065Z:   - mikestead.dotenv
+
+2026-08-10 23:25:52.074Z:   - ms-vscode-remote.remote-containers
+
+2026-08-10 23:25:52.083Z:   - ms-vscode-remote.remote-ssh
+
+2026-08-10 23:25:52.090Z:   - ms-vscode-remote.remote-ssh-edit
+
+2026-08-10 23:25:52.098Z:   - ms-vscode-remote.remote-wsl
+
+2026-08-10 23:25:52.107Z:   - ms-vscode-remote.vscode-remote-extensionpack
+
+2026-08-10 23:25:52.123Z:   - ms-vscode.azure-repos
+
+2026-08-10 23:25:52.135Z:   - ms-vscode.powershell
+
+2026-08-10 23:25:52.176Z:   - ms-vscode.remote-explorer
+
+2026-08-10 23:25:52.202Z:   - ms-vscode.remote-repositories
+
+2026-08-10 23:25:52.211Z:   - ms-vscode.remote-server
+
+2026-08-10 23:25:52.218Z:   - ms-vscode.test-adapter-converter
+
+2026-08-10 23:25:52.227Z:   - oderwat.indent-rainbow
+
+2026-08-10 23:25:52.236Z:   - pflannery.vscode-versionlens
+
+2026-08-10 23:25:52.244Z:   - pkief.material-icon-theme
+
+2026-08-10 23:25:52.252Z:   - redhat.vscode-yaml
+
+2026-08-10 23:25:52.261Z:   - shahilkumar.docxreader
+
+2026-08-10 23:25:52.269Z:   - softwareape.numbermonger
+
+2026-08-10 23:25:52.277Z:   - souravahmed.flash-vscode-latest
+
+2026-08-10 23:25:52.285Z:   - techer.open-in-browser
+
+2026-08-10 23:25:52.293Z:   - tomoki1207.pdf
+
+2026-08-10 23:25:52.300Z:   - tomoyukim.vscode-mermaid-editor
+
+2026-08-10 23:25:52.308Z:   - usernamehw.errorlens
+
+2026-08-10 23:25:52.316Z:   - vstirbu.vscode-mermaid-preview
+
+2026-08-10 23:25:52.324Z:   - wix.vscode-import-cost
+
+2026-08-10 23:25:52.332Z:   - yzhang.markdown-all-in-one
+
+2026-08-10 23:25:52.341Z: install.sh: failed to install 61 extension(s): 36.markdown-auto-link-title aaron-bond.better-comments adpyke.codesnap akamud.vscode-theme-onedark albert.tabout anthropic.claude-code asvetliakov.vscode-neovim aykutsarac.jsoncrack-vscode be5invis.vscode-icontheme-nomo-dark bierner.markdown-mermaid bierner.markdown-preview-github-styles bpruitt-goddard.mermaid-markdown-syntax-highlighting christian-kohler.path-intellisense davidanson.vscode-markdownlint docker.docker donjayamanne.githistory dotenv.dotenv-vscode dzhavat.bracket-pair-toggler eamodio.gitlens esbenp.prettier-vscode formulahendry.auto-rename-tag foxundermoon.shell-format github.codespaces github.remotehub github.vscode-github-actions gruntfuggly.todo-tree hbenl.vscode-test-explorer hwencc.html-tag-wrapper jellydn.fzf-picker joephilip.markdown-code-snippets jonlester.markdown-preview-export maciejdems.add-to-gitignore mathematic.vscode-pdf mechatroner.rainbow-csv mhutchie.git-graph mikestead.dotenv ms-vscode-remote.remote-containers ms-vscode-remote.remote-ssh ms-vscode-remote.remote-ssh-edit ms-vscode-remote.remote-wsl ms-vscode-remote.vscode-remote-extensionpack ms-vscode.azure-repos ms-vscode.powershell ms-vscode.remote-explorer ms-vscode.remote-repositories ms-vscode.remote-server ms-vscode.test-adapter-converter oderwat.indent-rainbow pflannery.vscode-versionlens pkief.material-icon-theme redhat.vscode-yaml shahilkumar.docxreader softwareape.numbermonger souravahmed.flash-vscode-latest techer.open-in-browser tomoki1207.pdf tomoyukim.vscode-mermaid-editor usernamehw.errorlens vstirbu.vscode-mermaid-preview wix.vscode-import-cost yzhang.markdown-all-in-one
+install.sh: installing starship
+
+2026-08-10 23:25:52.979Z: 
+
+2026-08-10 23:25:53.133Z:   Configuration
+> Bin directory: /usr/local/bin
+> Platform:      unknown-linux-musl
+> Arch:          x86_64
+
+
+2026-08-10 23:25:53.133Z: > Tarball URL: ********/starship/starship/releases/latest/download/starship-x86_64-unknown-linux-musl.tar.gz
+
+2026-08-10 23:25:53.209Z: ! Escalated permissions are required to install to /usr/local/bin
+
+2026-08-10 23:25:53.215Z: > Installing Starship as root, please wait…
+
+2026-08-10 23:25:54.196Z: ✓ Starship latest installed
+
+> Please follow the steps for your shell to complete the installation:
+  bash
+  Add the following to the end of ~/.bashrc:
+
+	eval "$(starship init bash)"
+
+  zsh
+  Add the following to the end of ~/.zshrc:
+
+	eval "$(starship init zsh)"
+
+  ion
+  Add the following to the end of ~/.config/ion/initrc:
+
+	eval $(starship init ion)
+
+  tcsh
+  Add the following to the end of ~/.tcshrc:
+
+	eval `starship init tcsh`
+
+  xonsh
+  Add the following to the end of ~/.xonshrc:
+
+	execx($(starship init xonsh))
+
+  fish
+  Add the following to the end of ~/.config/fish/config.fish:
+
+	starship init fish | source
+
+  elvish
+  Warning Only elvish v0.17 or higher is supported.
+  And add the following to the end of ~/.config/elvish/rc.elv:
+
+	eval (starship init elvish)
+
+  nushell
+  Warning This will change in the future.
+  Only Nushell v0.96 or higher is supported.
+  And add the following to the end of your nu config file (find it by running $nu.config-path in Nushell):
+
+	mkdir ($nu.data-dir | path join "vendor/autoload")
+        starship init nu | save -f ($nu.data-dir | path join "vendor/autoload/starship.nu")
+
+  PowerShell
+  Add the following to the end of Microsoft.PowerShell_profile.ps1:
+  You can check the location of this file by querying the $PROFILE variable in PowerShell.
+  Typically the path is ~\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 or ~/.config/powershell/Microsoft.PowerShell_profile.ps1 on -Nix.
+
+	Invoke-Expression (&starship init powershell)
+
+  Cmd
+  You need to use Clink (v1.2.30+) with Cmd. Add the following to a file starship.lua and place this file in Clink scripts directory:
+
+	load(io.popen('starship init cmd'):read("*a"))()
+
+
+
+2026-08-10 23:25:54.326Z: install.sh: linked starship.toml
+
+2026-08-10 23:25:54.481Z: install.sh: added starship init to /home/codespace/.bashrc
+
+2026-08-10 23:25:54.482Z: install.sh: installing neovim
+
+2026-08-10 23:25:55.799Z: install.sh: added ~/.local/bin to PATH in /home/codespace/.bashrc
+
+2026-08-10 23:25:55.802Z: install.sh: linked nvim config
+
+2026-08-10 23:25:55.805Z: install.sh: installing via apt: ripgrep fd-find fzf
+
+2026-08-10 23:26:24.374Z: Selecting previously unselected package fd-find.
+(Reading database ... 
+
+2026-08-10 23:26:24.503Z: (Reading database ... 5%
+(Reading database ... 10%
+(Reading database ... 15%
+(Reading database ... 20%
+(Reading database ... 25%
+(Reading database ... 30%
+(Reading database ... 35%
+(Reading database ... 40%
+(Reading database ... 45%
+(Reading database ... 50%
+(Reading database ... 55%
+(Reading database ... 60%
+
+2026-08-10 23:26:24.645Z: (Reading database ... 65%
+
+2026-08-10 23:26:24.918Z: (Reading database ... 70%
+
+2026-08-10 23:26:25.279Z: (Reading database ... 75%
+
+2026-08-10 23:26:25.279Z: (Reading database ... 80%
+
+2026-08-10 23:26:25.345Z: (Reading database ... 85%
+
+2026-08-10 23:26:25.694Z: (Reading database ... 90%
+
+2026-08-10 23:26:25.791Z: (Reading database ... 95%
+
+2026-08-10 23:26:26.032Z: (Reading database ... 100%
+(Reading database ... 58630 files and directories currently installed.)
+
+2026-08-10 23:26:26.057Z: Preparing to unpack .../fd-find_9.0.0-1_amd64.deb ...
+2026-08-10 23:26:26.061Z: 
+
+2026-08-10 23:26:28.359Z: Unpacking fd-find (9.0.0-1) ...
+
+2026-08-10 23:26:34.376Z: Selecting previously unselected package fzf.
+
+2026-08-10 23:26:34.383Z: Preparing to unpack .../fzf_0.44.1-1ubuntu0.3_amd64.deb ...
+
+2026-08-10 23:26:34.795Z: Unpacking fzf (0.44.1-1ubuntu0.3) ...
+
+2026-08-10 23:26:37.274Z: Selecting previously unselected package ripgrep.
+
+2026-08-10 23:26:37.279Z: Preparing to unpack .../ripgrep_14.1.0-1_amd64.deb ...
+
+2026-08-10 23:26:37.700Z: Unpacking ripgrep (14.1.0-1) ...
+
+2026-08-10 23:26:40.311Z: Setting up fd-find (9.0.0-1) ...
+
+2026-08-10 23:26:41.333Z: Setting up fzf (0.44.1-1ubuntu0.3) ...
+
+2026-08-10 23:26:42.256Z: Setting up ripgrep (14.1.0-1) ...
+
+2026-08-10 23:26:43.204Z: Processing triggers for man-db (2.12.0-4build2) ...
+
+2026-08-10 23:27:02.721Z: install.sh: installing zoxide
+
+2026-08-10 23:27:03.008Z: Detected architecture: x86_64-unknown-linux-musl
+
+2026-08-10 23:27:03.919Z: Downloaded package: zoxide.tar.gz
+
+2026-08-10 23:27:03.947Z: Installed zoxide to /home/codespace/.local/bin
+
+2026-08-10 23:27:04.461Z: Installed manpages to /home/codespace/.local/share/man
+
+zoxide is installed!
+
+2026-08-10 23:27:04.462Z: install.sh: added zoxide init to /home/codespace/.bashrc
+install.sh: installing lazygit
+
+2026-08-10 23:27:05.412Z: install.sh: installing CaskaydiaCove Nerd Font
+
+2026-08-10 23:27:11.187Z: install.sh: NOTE - this only installs the font inside the container. Codespaces renders VS Code's UI (editor, terminal) on the client, so CaskaydiaCove Nerd Font must also be installed on the machine running VS Code (desktop app or the OS behind your browser).
+install.sh: done
+
+2026-08-10 23:27:11.187Z: Outcome: success User: codespace WorkspaceFolder: /workspaces/0D_proxy_layer
+2026-08-10 23:27:11.188Z: 
+2026-08-10 23:27:11.189Z: Stop: Run in container: # Clone & install dotfiles
+2026-08-10 23:27:11.232Z: devcontainer process exited with exit code 0
+
+=================================================================================
+2026-08-10 23:27:11.232Z: Finished configuring codespace.

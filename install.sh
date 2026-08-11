@@ -62,11 +62,17 @@ install_vscode_extensions() {
   fi
 
   echo "install.sh: installing VS Code extensions with '$code_bin'"
+  # --list-extensions requires a live VS Code Server connection, same as
+  # --install-extension, so this whole function only works from
+  # postAttachCommand (after a client has connected), never postCreateCommand.
+  local installed
+  installed="$("$code_bin" --list-extensions 2>/dev/null | tr '[:upper:]' '[:lower:]')"
   local failed=()
   while IFS= read -r ext || [ -n "$ext" ]; do
     ext="$(echo "$ext" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
     [ -z "$ext" ] && continue
     case "$ext" in \#*) continue ;; esac
+    grep -qiFx "$ext" <<< "$installed" && continue
     echo "  - $ext"
     "$code_bin" --install-extension "$ext" --force >/dev/null 2>&1 || failed+=("$ext")
   done < "$extensions_file"
@@ -238,12 +244,32 @@ install_nerd_font() {
        "running VS Code (desktop app or the OS behind your browser)."
 }
 
-install_vscode_extensions
-install_starship
-install_neovim
-install_cli_tools
-install_zoxide
-install_lazygit
-install_nerd_font
+# Extension installs need a live VS Code Server connection (see comment in
+# install_vscode_extensions), which only exists once a client has attached --
+# never during postCreateCommand. So devcontainer.json calls this script
+# twice: once from postCreateCommand with --skip-extensions for everything
+# else, and once from postAttachCommand with --extensions-only.
+case "${1:-}" in
+  --extensions-only)
+    install_vscode_extensions
+    ;;
+  --skip-extensions)
+    install_starship
+    install_neovim
+    install_cli_tools
+    install_zoxide
+    install_lazygit
+    install_nerd_font
+    ;;
+  *)
+    install_vscode_extensions
+    install_starship
+    install_neovim
+    install_cli_tools
+    install_zoxide
+    install_lazygit
+    install_nerd_font
+    ;;
+esac
 
 echo "install.sh: done"

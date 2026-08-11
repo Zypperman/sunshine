@@ -12,6 +12,7 @@ bierner.markdown-preview-github-styles
 bpruitt-goddard.mermaid-markdown-syntax-highlighting
 christian-kohler.path-intellisense
 davidanson.vscode-markdownlint
+dbaeumer.vscode-eslint
 docker.docker
 donjayamanne.githistory
 dotenv.dotenv-vscode

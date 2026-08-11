@@ -80,5 +80,6 @@
       }
     }
   },
-  "postCreateCommand": "bash install.sh"
+  "postCreateCommand": "bash install.sh --skip-extensions",
+  "postAttachCommand": "bash install.sh --extensions-only"
 }
