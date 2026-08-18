@@ -182,6 +182,29 @@ install_zoxide() {
   fi
 }
 
+
+install_podman() {
+  if command -v podman &>/dev/null; then
+    echo "Podman is already installed."
+    return 0
+  fi
+
+  if command -v apt-get &>/dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y podman
+  elif command -v dnf &>/dev/null; then
+    sudo dnf install -y podman
+  elif command -v yum &>/dev/null; then
+    sudo yum install -y podman
+  else
+    echo "Error: No supported package manager found (apt, dnf, yum)." >&2
+    return 1
+  fi
+  
+  echo "Podman installation completed successfully."
+}
+
+
 install_lazygit() {
   if command -v lazygit >/dev/null 2>&1; then
     echo "install.sh: lazygit already installed, skipping"
@@ -260,6 +283,7 @@ case "${1:-}" in
     install_zoxide
     install_lazygit
     install_nerd_font
+    install_podman
     ;;
   *)
     install_vscode_extensions
@@ -269,6 +293,7 @@ case "${1:-}" in
     install_zoxide
     install_lazygit
     install_nerd_font
+    install_podman
     ;;
 esac
 
