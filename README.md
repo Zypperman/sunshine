@@ -83,7 +83,11 @@ Both paths run [`install.sh`](install.sh), which installs:
 - [ ] Barebones for co
   - [x] set up base extensions
   - [x] export view/layout preferences (sidebar + activity bar position)
+  - [ ] add zoxide to install
   - [ ] export shortcuts
 - [ ] tools from MSI summit e16
 - [ ] adapt tools for linux
 - [ ] adapt tools for MacOS
+
+
+
