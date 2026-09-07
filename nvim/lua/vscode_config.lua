@@ -7,32 +7,6 @@ vim.g.mapleader = " "
 -- 1. Force Neovim's internal spell engine OFF
 vim.opt.spell = false
 
--- 2. Use a direct VSCodeNotify call for zg
--- We use 'expr = true' or a function to ensure Neovim doesn't run the built-in zg
-vim.keymap.set('n', 'zg', function()
-    vim.fn.VSCodeNotify('cSpell.addWordToDictionary')
-end, {silent = true, noremap = true})
-
-vim.keymap.set('n', 'z=',
-               function() vim.fn.VSCodeNotify('cSpell.suggestSpelling') end,
-               {silent = true, noremap = true})
-
--- Jump to next spelling error (]s)
-vim.keymap.set('n', ']s', function()
-    vim.fn.VSCodeNotify('cSpell.goToNextSpellingIssue')
-end, {silent = true})
-
--- Jump to previous spelling error ([s)
-vim.keymap.set('n', '[s', function()
-    vim.fn.VSCodeNotify('cSpell.goToPreviousSpellingIssue')
-end, {silent = true})
-
--- Navigation
-vim.keymap.set("n", "<C-u>",
-               function() vscode.action("editor.action.scrollLineUp") end)
-vim.keymap.set("n", "<C-d>",
-               function() vscode.action("editor.action.scrollLineDown") end)
-
 -- Multi-Cursor
 vim.keymap.set("n", "<C-k>",
                function() vscode.action("editor.action.insertCursorAbove") end)

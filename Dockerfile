@@ -4,7 +4,8 @@
 # install dotfiles) for accounts/orgs where that feature is disabled by
 # policy. It bakes in everything install.sh installs: starship, neovim +
 # this repo's config, ripgrep/fd/fzf/build-essential, zoxide, lazygit, the
-# CaskaydiaCove Nerd Font, podman, plus this whole repo at ~/dotfiles.
+# CaskaydiaCove Nerd Font, podman + podman-compose, plus this whole repo at
+# ~/dotfiles.
 #
 # HOW TO USE -- a dedicated repo that IS your dotfiles, instead of a
 # per-account setting that applies them

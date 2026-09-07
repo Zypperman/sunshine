@@ -205,6 +205,32 @@ install_podman() {
 }
 
 
+# `podman compose` (podman >= 4.1) is only a thin wrapper: it shells out to an
+# external compose implementation and ships none of its own. podman-compose is
+# that implementation -- installing it makes `podman compose` work, and is also
+# usable directly as `podman-compose`.
+install_podman_compose() {
+  if command -v podman-compose &>/dev/null; then
+    echo "podman-compose is already installed."
+    return 0
+  fi
+
+  if command -v apt-get &>/dev/null; then
+    sudo apt-get update
+    sudo apt-get install -y podman-compose
+  elif command -v dnf &>/dev/null; then
+    sudo dnf install -y podman-compose
+  elif command -v yum &>/dev/null; then
+    sudo yum install -y podman-compose
+  else
+    echo "Error: No supported package manager found (apt, dnf, yum)." >&2
+    return 1
+  fi
+
+  echo "podman-compose installation completed successfully."
+}
+
+
 install_lazygit() {
   if command -v lazygit >/dev/null 2>&1; then
     echo "install.sh: lazygit already installed, skipping"
@@ -284,6 +310,7 @@ case "${1:-}" in
     install_lazygit
     install_nerd_font
     install_podman
+    install_podman_compose
     ;;
   *)
     install_vscode_extensions
@@ -294,6 +321,7 @@ case "${1:-}" in
     install_lazygit
     install_nerd_font
     install_podman
+    install_podman_compose
     ;;
 esac
 

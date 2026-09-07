@@ -66,6 +66,13 @@ Both paths run [`install.sh`](install.sh), which installs:
   installed to `~/.local/bin`) wired into `~/.bashrc`
 - [`lazygit`](https://github.com/jesseduffield/lazygit) (latest GitHub
   release, installed to `~/.local/bin`)
+- [`podman`](https://podman.io) and
+  [`podman-compose`](https://github.com/containers/podman-compose) via the
+  system package manager. `podman compose` is only a wrapper that shells out
+  to an external compose implementation, so podman-compose is what makes that
+  subcommand work — it also runs standalone as `podman-compose`. Note this
+  repo installs no Docker: there is no `docker` CLI and no daemon, so the
+  `docker.docker` extension in `extensions.md` has nothing to connect to.
 - the [CaskaydiaCove Nerd Font](https://www.nerdfonts.com/font-downloads)
   (Nerd Fonts' patched Cascadia Code), installed under
   `~/.local/share/fonts` *inside the container*
