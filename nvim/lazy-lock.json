@@ -1,0 +1,6 @@
+{
+  "lazy.nvim": { "branch": "main", "commit": "85c7ff3711b730b4030d03144f6db6375044ae82" },
+  "mini.surround": { "branch": "main", "commit": "580e4cb98c5900d9fe743865fb5a5b2178b4ab18" },
+  "neogen": { "branch": "main", "commit": "23e7e9f883d01289ebd90e98025acc860ea26366" },
+  "vim-peekaboo": { "branch": "master", "commit": "2a8a3187ba6b15201b2563a3f0331fcdf49da36c" }
+}
