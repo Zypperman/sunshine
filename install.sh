@@ -230,6 +230,36 @@ install_podman_compose() {
   echo "podman-compose installation completed successfully."
 }
 
+install_powershell() {
+  if command -v pwsh >/dev/null 2>&1; then
+    echo "install.sh: PowerShell already installed, skipping"
+    return 0
+  fi
+
+  echo "install.sh: installing PowerShell"
+  
+  if command -v apt-get &>/dev/null; then
+    # Debian/Ubuntu
+    sudo apt-get update
+    sudo apt-get install -y powershell
+  elif command -v dnf &>/dev/null; then
+    # Fedora
+    sudo dnf install -y powershell
+  elif command -v yum &>/dev/null; then
+    # RHEL/CentOS
+    sudo yum install -y powershell
+  elif command -v brew &>/dev/null; then
+    # macOS
+    brew install powershell
+  else
+    echo "Error: No supported package manager found (apt, dnf, yum, brew)." >&2
+    return 1
+  fi
+
+  echo "PowerShell installation completed successfully."
+}
+
+
 
 install_lazygit() {
   if command -v lazygit >/dev/null 2>&1; then
@@ -311,6 +341,7 @@ case "${1:-}" in
     install_nerd_font
     install_podman
     install_podman_compose
+    install_powershell
     ;;
   *)
     install_vscode_extensions
