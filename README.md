@@ -77,6 +77,13 @@ Both paths run [`install.sh`](install.sh), which installs:
   (Nerd Fonts' patched Cascadia Code), installed under
   `~/.local/share/fonts` *inside the container*
 
+Shell profile snippets live under [`shrc/`](shrc). The repo currently includes
+[`shrc/.bash_profile`](shrc/.bash_profile) with:
+
+- `alias lg="lazygit"`
+- `alias pm="podman"`
+- `alias pc="podman-compose"`
+
   This last one only helps if something running server-side in the
   container needs the font file on disk — it does **not** make glyphs
   (starship icons, nvim fold/mode indicators, etc.) render correctly by
@@ -95,6 +102,5 @@ Both paths run [`install.sh`](install.sh), which installs:
 - [ ] tools from MSI summit e16
 - [ ] adapt tools for linux
 - [ ] adapt tools for MacOS
-
 
 
