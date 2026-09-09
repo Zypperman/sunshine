@@ -230,6 +230,75 @@ install_podman_compose() {
   echo "podman-compose installation completed successfully."
 }
 
+install_node() {
+  if command -v node >/dev/null 2>&1; then
+    echo "install.sh: Node.js already installed, skipping"
+    return 0
+  fi
+
+  echo "install.sh: installing Node.js"
+  if command -v apt-get >/dev/null 2>&1; then
+    sudo apt-get update
+    sudo apt-get install -y nodejs
+  elif command -v dnf >/dev/null 2>&1; then
+    sudo dnf install -y nodejs
+  elif command -v yum >/dev/null 2>&1; then
+    sudo yum install -y nodejs
+  elif command -v brew >/dev/null 2>&1; then
+    brew install node
+  else
+    echo "Error: No supported package manager found (apt, dnf, yum, brew)." >&2
+    return 1
+  fi
+
+  echo "Node.js installation completed successfully."
+}
+
+install_npm() {
+  if command -v npm >/dev/null 2>&1; then
+    echo "install.sh: npm already installed, skipping"
+    return 0
+  fi
+
+  echo "install.sh: installing npm"
+  if command -v apt-get >/dev/null 2>&1; then
+    sudo apt-get update
+    sudo apt-get install -y npm
+  elif command -v dnf >/dev/null 2>&1; then
+    sudo dnf install -y npm
+  elif command -v yum >/dev/null 2>&1; then
+    sudo yum install -y npm
+  elif command -v brew >/dev/null 2>&1; then
+    brew install node
+  else
+    echo "Error: No supported package manager found (apt, dnf, yum, brew)." >&2
+    return 1
+  fi
+
+  echo "npm installation completed successfully."
+}
+
+install_postman_cli() {
+  if command -v postman >/dev/null 2>&1 || command -v postman-cli >/dev/null 2>&1; then
+    echo "install.sh: Postman CLI already installed, skipping"
+    return 0
+  fi
+
+  if ! command -v npm >/dev/null 2>&1; then
+    echo "install.sh: npm is required to install Postman CLI"
+    return 1
+  fi
+
+  echo "install.sh: installing Postman CLI"
+  if command -v sudo >/dev/null 2>&1; then
+    sudo npm install -g postman-cli
+  else
+    npm install -g postman-cli
+  fi
+
+  echo "Postman CLI installation completed successfully."
+}
+
 install_powershell() {
   if command -v pwsh >/dev/null 2>&1; then
     echo "install.sh: PowerShell already installed, skipping"
@@ -342,6 +411,9 @@ case "${1:-}" in
     install_podman
     install_podman_compose
     install_powershell
+    # install_node
+    # install_npm
+    # install_postman_cli
     ;;
   *)
     install_vscode_extensions
@@ -353,6 +425,9 @@ case "${1:-}" in
     install_nerd_font
     install_podman
     install_podman_compose
+    # install_node
+    # install_npm
+    # install_postman_cli
     ;;
 esac
 

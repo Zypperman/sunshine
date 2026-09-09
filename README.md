@@ -85,6 +85,13 @@ Both paths run [`install.sh`](install.sh), which installs:
   (`editor.fontFamily` / `terminal.integrated.fontFamily`) on whichever
   client (desktop app, or the OS behind your browser) you're viewing it on.
 
+Shell profile snippets live under [`shrc/`](shrc). The repo currently includes
+[`shrc/.bash_profile`](shrc/.bash_profile) with:
+
+- `alias lg="lazygit"`
+- `alias pm="podman"`
+- `alias pc="podman-compose"`
+
 ## Progress
 
 - [ ] Barebones for co
@@ -95,6 +102,4 @@ Both paths run [`install.sh`](install.sh), which installs:
 - [ ] tools from MSI summit e16
 - [ ] adapt tools for linux
 - [ ] adapt tools for MacOS
-
-
 
