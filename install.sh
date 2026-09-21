@@ -17,6 +17,7 @@ dotfiles_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 extensions_file="$dotfiles_dir/extensions.md"
 starship_config_file="$dotfiles_dir/starship.toml"
 nvim_config_dir="$dotfiles_dir/nvim"
+shrc_dir="$dotfiles_dir/shrc"
 local_bin="$HOME/.local/bin"
 apt_updated=0
 
@@ -179,6 +180,43 @@ install_zoxide() {
   if [ ! -f "$bashrc" ] || ! grep -qF "zoxide init bash" "$bashrc"; then
     echo 'eval "$(zoxide init bash)"' >> "$bashrc"
     echo "install.sh: added zoxide init to $bashrc"
+  fi
+}
+
+# Everything above (starship init, zoxide init) is wired into ~/.bashrc. But a
+# Codespaces integrated terminal starts bash as a *login* shell, which reads
+# ~/.bash_profile (or ~/.profile) and does NOT read ~/.bashrc unless one of
+# them sources it. If a ~/.bash_profile exists that doesn't -- e.g. one holding
+# just aliases -- it shadows Ubuntu's default ~/.profile (which does source
+# ~/.bashrc), so login shells silently skip starship and show a plain prompt.
+# Make ~/.bash_profile source ~/.bashrc so login and non-login interactive
+# shells behave identically, then load this repo's aliases from ~/.bashrc
+# (aliases aren't inherited by subshells, so they belong there, not in a
+# login-only profile).
+install_shell_profile() {
+  local bashrc="$HOME/.bashrc"
+  local bash_profile="$HOME/.bash_profile"
+  local marker='# sunshine dotfiles: ensure login shells load ~/.bashrc'
+
+  if [ ! -f "$bash_profile" ] || ! grep -qF "$marker" "$bash_profile"; then
+    {
+      echo ""
+      echo "$marker"
+      echo 'if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then'
+      echo '  . "$HOME/.bashrc"'
+      echo 'fi'
+    } >> "$bash_profile"
+    echo "install.sh: wired ~/.bash_profile to source ~/.bashrc"
+  fi
+
+  local aliases_file="$shrc_dir/.bash_profile"
+  if [ -f "$aliases_file" ]; then
+    if [ ! -f "$bashrc" ] || ! grep -qF "$aliases_file" "$bashrc"; then
+      echo ". \"$aliases_file\"" >> "$bashrc"
+      echo "install.sh: sourced repo shell aliases from ~/.bashrc"
+    fi
+  else
+    echo "install.sh: $aliases_file not found, skipping shell aliases"
   fi
 }
 
@@ -406,6 +444,7 @@ case "${1:-}" in
     install_neovim
     install_cli_tools
     install_zoxide
+    install_shell_profile
     install_lazygit
     install_nerd_font
     install_podman
@@ -421,6 +460,7 @@ case "${1:-}" in
     install_neovim
     install_cli_tools
     install_zoxide
+    install_shell_profile
     install_lazygit
     install_nerd_font
     install_podman

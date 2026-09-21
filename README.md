@@ -92,6 +92,22 @@ Shell profile snippets live under [`shrc/`](shrc). The repo currently includes
 - `alias pm="podman"`
 - `alias pc="podman-compose"`
 
+`install.sh` wires these up (via `install_shell_profile`) so they load in
+every interactive shell — it sources `shrc/.bash_profile` from `~/.bashrc`
+(aliases aren't inherited by subshells, so they belong in `~/.bashrc`, not a
+login-only profile).
+
+`install_shell_profile` also fixes a subtle prompt problem: everything this
+script wires up — starship's `eval "$(starship init bash)"`, zoxide's init,
+the aliases — lives in `~/.bashrc`, but a Codespaces integrated terminal
+starts bash as a **login** shell, which reads `~/.bash_profile` (or
+`~/.profile`) and **not** `~/.bashrc` unless one of them sources it. A
+`~/.bash_profile` that holds just aliases would shadow Ubuntu's default
+`~/.profile` (which does source `~/.bashrc`), so login shells would silently
+skip starship and show a plain prompt. To prevent that, `install.sh` makes
+`~/.bash_profile` source `~/.bashrc`, so login and non-login interactive
+shells behave identically and starship always loads.
+
 ## Progress
 
 - [ ] Barebones for co
