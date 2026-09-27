@@ -398,6 +398,67 @@ install_lazygit() {
   rm -rf "$tmp"
 }
 
+install_tuxedo() {
+  if command -v tuxedo >/dev/null 2>&1; then
+    echo "install.sh: tuxedo already installed, skipping"
+    return 0
+  fi
+
+  local target=""
+  case "$(uname -m)" in
+    x86_64|amd64)
+      target="x86_64-unknown-linux-gnu"
+      ;;
+    aarch64|arm64)
+      target="aarch64-unknown-linux-gnu"
+      ;;
+    *)
+      echo "install.sh: unsupported architecture for tuxedo: $(uname -m), skipping"
+      return 0
+      ;;
+  esac
+
+  echo "install.sh: installing tuxedo"
+  local release_tag download_url archive_name
+  release_tag="$(curl -fsSLI -o /dev/null -w '%{url_effective}' \
+    "https://github.com/webstonehq/tuxedo/releases/latest" \
+    | sed -n 's#.*releases/tag/##p')"
+  if [ -z "$release_tag" ]; then
+    echo "install.sh: could not resolve latest tuxedo release tag, skipping"
+    return 0
+  fi
+
+  archive_name="tuxedo-${release_tag}-${target}.tar.gz"
+  download_url="https://github.com/webstonehq/tuxedo/releases/download/${release_tag}/${archive_name}"
+  local tmp extracted_bin downloaded_path
+  tmp="$(mktemp -d)"
+  downloaded_path="$tmp/$archive_name"
+  if ! curl -fsSL -o "$downloaded_path" "$download_url"; then
+    echo "install.sh: tuxedo download failed: $download_url"
+    rm -rf "$tmp"
+    return 0
+  fi
+
+  if ! tar -xzf "$downloaded_path" -C "$tmp" >/dev/null 2>&1; then
+    echo "install.sh: failed to unpack tuxedo archive"
+    rm -rf "$tmp"
+    return 0
+  fi
+
+  extracted_bin="$(find "$tmp" -maxdepth 3 -type f -name tuxedo -print -quit)"
+  if [ -z "$extracted_bin" ]; then
+    echo "install.sh: tuxedo binary not found in archive"
+    rm -rf "$tmp"
+    return 0
+  fi
+
+  install -m 0755 "$extracted_bin" "$local_bin/tuxedo"
+
+  rm -rf "$tmp"
+  ensure_local_bin_on_path
+  echo "install.sh: tuxedo installed to $local_bin/tuxedo"
+}
+
 install_nerd_font() {
   local font_dir="$HOME/.local/share/fonts/CaskaydiaCoveNerdFont"
   if [ -d "$font_dir" ] && [ -n "$(ls -A "$font_dir" 2>/dev/null)" ]; then
@@ -446,6 +507,7 @@ case "${1:-}" in
     install_zoxide
     install_shell_profile
     install_lazygit
+    install_tuxedo
     install_nerd_font
     install_podman
     install_podman_compose
@@ -462,6 +524,7 @@ case "${1:-}" in
     install_zoxide
     install_shell_profile
     install_lazygit
+    install_tuxedo
     install_nerd_font
     install_podman
     install_podman_compose

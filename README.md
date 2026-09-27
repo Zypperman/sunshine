@@ -66,6 +66,8 @@ Both paths run [`install.sh`](install.sh), which installs:
   installed to `~/.local/bin`) wired into `~/.bashrc`
 - [`lazygit`](https://github.com/jesseduffield/lazygit) (latest GitHub
   release, installed to `~/.local/bin`)
+- [`tuxedo`](https://github.com/webstonehq/tuxedo) (latest GitHub release for
+  Linux `x86_64` / `aarch64`, installed to `~/.local/bin`)
 - [`podman`](https://podman.io) and
   [`podman-compose`](https://github.com/containers/podman-compose) via the
   system package manager. `podman compose` is only a wrapper that shells out
@@ -118,4 +120,3 @@ shells behave identically and starship always loads.
 - [ ] tools from MSI summit e16
 - [ ] adapt tools for linux
 - [ ] adapt tools for MacOS
-
